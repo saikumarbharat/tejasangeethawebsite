@@ -1,0 +1,1 @@
+web: gunicorn tejasangeethawebsite.wsgi —-log-file -
