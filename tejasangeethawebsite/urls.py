@@ -18,7 +18,10 @@ from django.urls import path
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-#from django.views.generic import RedirectView
+from django.views.generic import RedirectView
+from django.views.generic import RedirectView
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,9 +29,9 @@ urlpatterns = [
     ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     
 
-#urlpatterns += [
-    #path('', RedirectView.as_view(url='/tejas/', permanent=True)),
-    #]
+urlpatterns += [
+    path('', RedirectView.as_view(url='/tejas/', permanent=True))
+    ]
 
 #if settings.DEBUG:
     # static files (images, css, javascript, etc.)

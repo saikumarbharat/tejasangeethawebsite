@@ -1,6 +1,11 @@
 {% block sidebar %}
 
-
+<style>
+        .card{
+            box-shadow: 0 16px 48px #E3E7EB;
+        }
+       
+</style>
 
 <!-- Sidebar Widgets Column -->
 <div class="col-md-4 float-left ">
@@ -9,7 +14,7 @@
 
 {% load static %}
   <img src="{% static 'images/tejas.jpg' %}" class="card-img-top" alt="teja">
-
+  
         <h5 class="card-header">RaviTea Sangeetha</h5>
     <div class="card-body">
         <p class="card-text"> Research Fellow</p>
@@ -27,3 +32,4 @@
 </div>
 
 {% endblock sidebar %}
+

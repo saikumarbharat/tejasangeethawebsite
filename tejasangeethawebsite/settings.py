@@ -9,11 +9,19 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-
 import os
 import django_heroku
+#import django.configurations
 import dj_database_url
-from decouple import config, Csv
+import environ
+from decouple import config 
+from decouple import Csv
+
+env = environ.Env()
+from configurations import Configuration
+
+#class Dev(Configuration):
+    #DEBUG = True
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,16 +32,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = '(4)j@by!bep%lmh&dlr(^$0b9v)#3nfgw8n*usixjtw#gj21y_'
+#SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','(4)j@by!bep%lmh&dlr(^$0b9v)#3nfgw8n*usixjtw#gj21y_')
 
-# SECURITY WARNING: don't run with debug turned on in production!
+SECRET_KEY = config('SECRET_KEY')
 
-DEBUG = False
-DEBUG = config('DEBUG', default=True, cast=bool)
-DEBUG = config('DEBUG', cast=bool)
-EMAIL_PORT = config('EMAIL_PORT', cast=int)
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default = ravitejasangeetha@herokuapp.com, cast=Csv())
+
 
 # Application definition
 
@@ -50,7 +57,7 @@ INSTALLED_APPS = [
     'fa',
     'crispy_forms',
     'sortedm2m',
-]
+    ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -58,7 +65,6 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django_referrer_policy.middleware.ReferrerPolicyMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -97,14 +103,13 @@ DATABASES = {
         'USER': 'ravitejas',
         'PASSWORD': 'Rav*tej9',
         'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT': '',
+
     }
 }
 
 db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -142,60 +147,23 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static-files')
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 #User_Uploaded_Files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
-
-
-# Security
-SECURE_HSTS_SECONDS =31536000
-#SECURE_SSL_REDIRECT =True
-SESSION_COOKIE_SECURE =True
-CSRF_COOKIE_SECURE =True
-SECURE_REFERRER_POLICY ='strict-origin'
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_HSTS_PRELOAD = True
-
-
-
-SECURE_SSL_REDIRECT = env.bool('SECURE_SSL_REDIRECT', default=False)
-#SECURE_HSTS_SECONDS = env.int('SECURE_HSTS_SECONDS', default=0)
-SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_BROWSER_XSS_FILTER = True
-
-
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
-EMAIL_HOST = config('EMAIL_HOST', default='')
-EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
-EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
-EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 
-DEFAULT_FROM_EMAIL = 'ravitejasangeetha <noreply@ravitejasangeetha.herokuapp.com>'
-EMAIL_SUBJECT_PREFIX = '[ravitejasangeeth] '
 
+SECURE_SSL_REDIRECT = config('SECURE_SSL_REDIRECT', default=False, cast=bool)
+#SECURE_REFERRER_POLICY = config('SECURE_REFERRER_POLICY')
+django_heroku.settings(locals())
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
 
-
-
-
-
-
-
-
-django_heroku.settings(locals())
