@@ -36,10 +36,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = config('SECRET_KEY')
 
-DEBUG = config('DEBUG', default=False, cast=bool)
+#DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = False
 
+ALLOWED_HOSTS = ['0.0.0.0','localhost','ravitejasangeetha.herokuapp.com']
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default = ravitejasangeetha@herokuapp.com, cast=Csv())
+#ALLOWED_HOSTS = ['ravitejasangeetha.herokuapp.com']
+#ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 
 # Application definition
