@@ -14,10 +14,10 @@ import django_heroku
 #import django.configurations
 import dj_database_url
 import environ
-from decouple import config 
+from decouple import config
 from decouple import Csv
 
-env = environ.Env()
+#env = environ.Env()
 from configurations import Configuration
 
 #class Dev(Configuration):
@@ -31,15 +31,31 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = '(4)j@by!bep%lmh&dlr(^$0b9v)#3nfgw8n*usixjtw#gj21y_'
-#SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','(4)j@by!bep%lmh&dlr(^$0b9v)#3nfgw8n*usixjtw#gj21y_')
+SECRET_KEY = '(4)j@by!bep%lmh&dlr(^$0b9v)#3nfgw8n*usixjtw#gj21y_'
 
-SECRET_KEY = config('SECRET_KEY')
+#used os.environ.get() to fetch secret key value-very useful method
 
-#DEBUG = config('DEBUG', default=False, cast=bool)
-DEBUG = False
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','(4)j@by!bep%lmh&dlr(^$0b9v)#3nfgw8n*usixjtw#gj21y_')
 
-ALLOWED_HOSTS = ['0.0.0.0','localhost','ravitejasangeetha.herokuapp.com']
+#SECRET_KEY = config('SECRET_KEY')
+
+#DEBUG = config('DEBUG', default= False, cast=bool)
+#DEBUG = True
+
+#DEBUG = config('DEBUG') 
+#This is good because it tries to get it from the environment, and if that fails, uses the second value in the tuple as the default: in this case, False.
+#DEBUG = os.environ.get("DEBUG", False)
+
+os.environ["DEBUG"] = 'False'
+DEBUG = config('DEBUG',  cast = bool)
+
+
+os.environ['ALLOWED_HOSTS']= 'localhost,127.0.0.1, ravitejasangeetha.herokuapp.com'
+#os.environ['ALLOWED_HOSTS']= 'localhost,127.0.0.1'
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+#
+#DEBUG = False
+#ALLOWED_HOSTS = ['localhost','127.0.0.1', 'ravitejasangeetha.herokuapp.com']
 
 #ALLOWED_HOSTS = ['ravitejasangeetha.herokuapp.com']
 #ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
@@ -169,4 +185,3 @@ django_heroku.settings(locals())
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
-

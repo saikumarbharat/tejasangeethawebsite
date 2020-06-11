@@ -71,7 +71,7 @@ def post_detail(request, slug):
 
 class ResearchPaperListView(generic.ListView):
     model = ResearchPaper
-
+    template_name = 'researchpaper_list.html'
 
 class ResearchPaperDetailView(generic.DetailView):
     model = ResearchPaper
@@ -80,11 +80,11 @@ class ResearchPaperDetailView(generic.DetailView):
             researchpaper = ResearchPaper.objects.get(pk=primary_key)
         except ResearchPaper.DoesNotExist:
             raise Http404('ResearchPaper does not exist')
-        return render(request, 'tejas/researchpaper_detail.html', context={'researchpaper': researchpaper})
+        return render(request, 'researchpaper_detail.html', context={'researchpaper': researchpaper})
 
     def researchpaper_detail_view(request, primary_key):
         researchpaper = get_object_or_404(ResearchPaper, pk=primary_key)
-        return render(request, 'tejas/researchpaper_detail.html', context={'researchpaper': researchpaper})
+        return render(request, 'researchpaper_detail.html', context={'researchpaper': researchpaper})
 
 from .forms import ContactForm
 
