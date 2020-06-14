@@ -16,15 +16,18 @@ import dj_database_url
 import environ
 from decouple import config
 from decouple import Csv
+import psycopg2
 
 #env = environ.Env()
 from configurations import Configuration
 
 #class Dev(Configuration):
-    #DEBUG = True
+#DEBUG = True
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 # Quick-start development settings - unsuitable for production
@@ -49,13 +52,13 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','(4)j@by!bep%lmh&dlr(^$0b9v)#3nf
 os.environ["DEBUG"] = 'False'
 DEBUG = config('DEBUG',  cast = bool)
 
+#ALLOWED_HOSTS should be presented as List[] otherwise Django does not accept it. cast=Csv present it as a list
+#os.environ['ALLOWED_HOSTS']= 'localhost,127.0.0.1, ravitejasangeetha.herokuapp.com'
 
-os.environ['ALLOWED_HOSTS']= 'localhost,127.0.0.1, ravitejasangeetha.herokuapp.com'
-#os.environ['ALLOWED_HOSTS']= 'localhost,127.0.0.1'
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+#ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 #
 #DEBUG = False
-#ALLOWED_HOSTS = ['localhost','127.0.0.1', 'ravitejasangeetha.herokuapp.com']
+ALLOWED_HOSTS = ['localhost','127.0.0.1', 'ravitejasangeetha.herokuapp.com']
 
 #ALLOWED_HOSTS = ['ravitejasangeetha.herokuapp.com']
 #ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
@@ -93,12 +96,20 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'tejasangeethawebsite.urls'
 
+class InvalidTemplateVariable(str):
+    def __mod__(self,other):
+        from django.template.base import TemplateSyntaxError
+        raise TemplateSyntaxError("Invalid variable : '%s'" % other)
+
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
+            'string_if_invalid': InvalidTemplateVariable("%s"),
+
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -126,6 +137,7 @@ DATABASES = {
 
     }
 }
+#conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
@@ -148,6 +160,46 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+#logger = logging.getLogger('tejasangeethawebsite')
+
+
+#{% syntax python %}
+# settings.py
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt' : "%d/%b/%Y %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'tejas.log',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers':['file'],
+            'propagate': True,
+            'level':'DEBUG',
+        },
+        'tejas': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+        },
+    }
+}
+
+#{% endsyntax %}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/

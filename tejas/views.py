@@ -150,3 +150,16 @@ def contactView(request):
 
 def successView(request):
     return HttpResponse('Success! Thank you for your message.')
+
+#% syntax python %}
+# views.py
+import logging
+logger = logging.getLogger(__name__)
+
+def myfunction():
+	logger.debug("this is a debug message!")
+
+def myotherfunction():
+	logger.error("this is an error message!!")
+#{% endsyntax %}
+
