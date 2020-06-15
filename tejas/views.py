@@ -3,6 +3,7 @@ from django.views import generic
 from .models import Post,ResearchPaper,Author,Project
 from .forms import CommentForm
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import TemplateView
 
 def resume(request):
     """View function for home page of site."""
@@ -25,15 +26,15 @@ def project_detail(request, pk):
     context = {"project": project}
     return render(request, "project_detail.html", context)
 
-
+class HomeView(TemplateView):
+    """View function for home page of site."""
+    template_name = 'home.html'
+#urlpatterns = [ url('^about/', views.AboutView.as_view(), name='about'),
 
 def index(request):
-    """View function for home page of site."""
-
+    """View function for index page of site."""
     # Render the HTML template index.html with the data in the context variable
     return render(request,'index.html')
-
-
 
 
 class PostList(generic.ListView):
@@ -162,4 +163,3 @@ def myfunction():
 def myotherfunction():
 	logger.error("this is an error message!!")
 #{% endsyntax %}
-

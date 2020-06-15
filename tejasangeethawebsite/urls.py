@@ -19,7 +19,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from django.views.generic import RedirectView
-
+from django.conf.urls import url
 from django.urls import path
 from django.views import generic
 from django.conf.urls.static import static
@@ -27,22 +27,24 @@ from django.views.generic import RedirectView, TemplateView
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from tejas import views
 
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', views.index, name='index'),
+tejas_patterns = ([
+    path('', views.HomeView.as_view(), name='home'),
     path('projectlist/', views.project_index, name='project_index'),
     path('<int:pk>/', views.project_detail, name='project_detail'),
     path('resume/', views.resume, name='resume'),
     path('contact/', views.contact, name='contact'),
     path('research/', views.ResearchPaperListView.as_view(), name='research'),
-    path('researchpaper/<int:pk>', views.ResearchPaperDetailView.as_view(), name='researchpaper-detail'),
+    path('<int:pk>', views.ResearchPaperDetailView.as_view(), name='researchpaper'),
     path('postlist/', views.PostList.as_view(), name="post_list"),
     path('<slug:slug>/', views.post_detail, name='post_detail'),
     path('contact/', views.contactView, name='contact'),
     path('success/', views.successView, name='success'),
+    ], 'tejas')
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('tejas/', include(tejas_patterns)),
     ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    
 
 urlpatterns += [
     path('', RedirectView.as_view(url='/tejas/', permanent=True))
@@ -51,4 +53,3 @@ urlpatterns += [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
