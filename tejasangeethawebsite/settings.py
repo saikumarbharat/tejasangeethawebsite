@@ -21,9 +21,6 @@ import psycopg2
 #env = environ.Env()
 from configurations import Configuration
 
-#class Dev(Configuration):
-#DEBUG = True
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -40,12 +37,7 @@ SECRET_KEY = '(4)j@by!bep%lmh&dlr(^$0b9v)#3nfgw8n*usixjtw#gj21y_'
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','(4)j@by!bep%lmh&dlr(^$0b9v)#3nfgw8n*usixjtw#gj21y_')
 
-#SECRET_KEY = config('SECRET_KEY')
 
-#DEBUG = config('DEBUG', default= False, cast=bool)
-#DEBUG = True
-
-#DEBUG = config('DEBUG') 
 #This is good because it tries to get it from the environment, and if that fails, uses the second value in the tuple as the default: in this case, False.
 #DEBUG = os.environ.get("DEBUG", False)
 
@@ -171,30 +163,36 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
-            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-            'datefmt' : "%d/%b/%Y %H:%M:%S"
+            'format': ('%(asctime)s [%(process)d] [%(levelname)s] '
+                       'pathname=%(pathname)s lineno=%(lineno)s '
+                       'funcname=%(funcName)s %(message)s'),
+            'datefmt': '%Y-%m-%d %H:%M:%S'
         },
         'simple': {
             'format': '%(levelname)s %(message)s'
-        },
+        }
     },
     'handlers': {
-        'file': {
+        'null': {
             'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': 'tejas.log',
-            'formatter': 'verbose'
+            'class': 'logging.NullHandler',
         },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        }
     },
     'loggers': {
         'django': {
-            'handlers':['file'],
-            'propagate': True,
-            'level':'DEBUG',
-        },
-        'tejas': {
-            'handlers': ['file'],
+            'handlers': ['console'],
             'level': 'DEBUG',
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
         },
     }
 }
@@ -218,8 +216,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static-files')
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
 
 #User_Uploaded_Files
 MEDIA_URL = '/media/'

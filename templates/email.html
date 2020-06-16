@@ -2,7 +2,6 @@
     {% block content %}
   {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
    <h1>Contact us</h1>
-
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}

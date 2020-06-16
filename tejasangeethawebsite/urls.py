@@ -29,17 +29,17 @@ from tejas import views
 
 tejas_patterns = ([
     path('', views.HomeView.as_view(), name='home'),
-    path('projectlist/', views.project_index, name='project_index'),
-    path('<int:pk>/', views.project_detail, name='project_detail'),
-    path('resume/', views.resume, name='resume'),
-    path('contact/', views.contact, name='contact'),
-    path('research/', views.ResearchPaperListView.as_view(), name='research'),
-    path('<int:pk>', views.ResearchPaperDetailView.as_view(), name='researchpaper'),
-    path('postlist/', views.PostList.as_view(), name="post_list"),
-    path('<slug:slug>/', views.post_detail, name='post_detail'),
-    path('contact/', views.contactView, name='contact'),
-    path('success/', views.successView, name='success'),
-    ], 'tejas')
+    path('projectlist', views.project_index, name='project_index'),
+    path('<int:pk>', views.project_detail, name='project_detail'),
+    path('resume', views.resume, name='resume'),
+    path('contact', views.contact, name='contact'),
+    path('research', views.ResearchPaperListView.as_view(), name='research'),
+    path('researchpaper/<int:pk>', views.ResearchPaperDetailView.as_view(), name='researchpaper'),
+    path('postlist', views.PostList.as_view(), name="post_list"),
+    path('<slug:slug>', views.post_detail, name='post_detail'),
+    path('contacta', views.contactView, name='contacta'),
+    path('success', views.successView, name='success'),
+    ],'tejas')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

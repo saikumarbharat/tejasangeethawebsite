@@ -41,9 +41,6 @@ class PostList(generic.ListView):
     queryset = Post.objects.filter(status=1).order_by('-created_on')
     template_name = 'post_list.html'
 
-#class PostDetail(generic.DetailView):
-    #model = Post
-    #template_name = 'post_detail.html'
 # Create your views here.
 def post_detail(request, slug):
     template_name = 'post_detail.html'
@@ -124,8 +121,7 @@ def contact(request):
                 headers = {'Reply-To': contact_email }
             )
             email.send()
-            return redirect('contact')
-
+            return redirect('tejas:contact')
     return render(request, 'contact.html', {'form': form_class,})
 #
 from django.core.mail import send_mail, BadHeaderError
@@ -143,15 +139,15 @@ def contactView(request):
             contact_email = form.cleaned_data['contact_email']
             content = form.cleaned_data['content']
             try:
-                send_mail(contact_name, content, contact_email, ['admin@example.com'])
+                send_mail(contact_name, content, contact_email, ['saikumarsangeetha@gmail.com'])
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
-            return redirect('success')
-    return render(request, 'email.html', {'form': form})
+            return redirect('tejas:success')
+    return render(request,'email.html', {'form': form})
 
 def successView(request):
-    return HttpResponse('Success! Thank you for your message.')
-
+    #return HttpResponse('Success! Thank you for your message.')
+    return render(request,'success.html')
 #% syntax python %}
 # views.py
 import logging
