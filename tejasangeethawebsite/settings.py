@@ -50,9 +50,9 @@ DEBUG = config('DEBUG',  cast = bool)
 #ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 #
 #DEBUG = False
-ALLOWED_HOSTS = ['localhost','127.0.0.1', 'ravitejasangeetha.herokuapp.com']
+#ALLOWED_HOSTS = ['localhost','127.0.0.1','ravitejasangeetha.herokuapp.com']
 
-#ALLOWED_HOSTS = ['ravitejasangeetha.herokuapp.com']
+ALLOWED_HOSTS = ['ravitejasangeetha.herokuapp.com']
 #ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 
