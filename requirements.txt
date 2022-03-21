@@ -29,5 +29,5 @@ sorl-thumbnail==12.6.3
 soupsieve==2.0
 South==1.0.2
 sqlparse==0.3.1
-waitress==1.4.3
+waitress==2.1.1
 whitenoise==5.1.0
