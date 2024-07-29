@@ -49,10 +49,10 @@ DEBUG = config('DEBUG',  cast = bool)
 
 #ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 #
-#DEBUG = False
+DEBUG = False
 #ALLOWED_HOSTS = ['localhost','127.0.0.1','ravitejasangeetha.herokuapp.com']
 
-ALLOWED_HOSTS = ['ravitejasangeetha.herokuapp.com']
+#ALLOWED_HOSTS = ['*']
 #ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 
@@ -236,7 +236,7 @@ EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.smtp.
 
 SECURE_SSL_REDIRECT = config('SECURE_SSL_REDIRECT', default=False, cast=bool)
 #SECURE_REFERRER_POLICY = config('SECURE_REFERRER_POLICY')
-django_heroku.settings(locals())
+#django_heroku.settings(locals())
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
