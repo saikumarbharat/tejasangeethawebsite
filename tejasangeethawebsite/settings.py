@@ -234,10 +234,10 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
 
 
-SECURE_SSL_REDIRECT = config('SECURE_SSL_REDIRECT', default=False, cast=bool)
+#SECURE_SSL_REDIRECT = config('SECURE_SSL_REDIRECT', default=False, cast=bool)
 #SECURE_REFERRER_POLICY = config('SECURE_REFERRER_POLICY')
 #django_heroku.settings(locals())
 
-SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_BROWSER_XSS_FILTER = True
-X_FRAME_OPTIONS = 'DENY'
+#SECURE_CONTENT_TYPE_NOSNIFF = True
+#SECURE_BROWSER_XSS_FILTER = True
+#X_FRAME_OPTIONS = 'DENY'
