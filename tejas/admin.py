@@ -38,3 +38,4 @@ admin.site.register(Author, AuthorAdmin)
 @admin.register(ResearchPaper)
 class ResearchPaperAdmin(admin.ModelAdmin):
     list_display = ('title', 'display_author', 'isbn')
+    
