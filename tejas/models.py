@@ -4,6 +4,10 @@ from datetime import date
 from django.urls import reverse
 from django.conf import settings
 from django.utils import timezone
+from django.contrib import admin
+#from tejas.models import Project
+# Register your models here.
+#admin.site.register(Project)
 
 
 STATUS = (
