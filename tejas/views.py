@@ -145,9 +145,11 @@ def contactView(request):
             return redirect('tejas:success')
     return render(request,'email.html', {'form': form})
 
-def successView(request):
-    #return HttpResponse('Success! Thank you for your message.')
-    return render(request,'success.html')
+class successView(TemplateView):
+    """View function for home page of site."""
+    template_name = 'success.html'
+#urlpatterns = [ url('^about/', views.AboutView.as_view(), name='about'),
+
 #% syntax python %}
 # views.py
 import logging
