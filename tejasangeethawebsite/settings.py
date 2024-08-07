@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'sortedm2m',
     #'python-dotenv',
+    'whitenoise.runserver_nostatic',
     'gunicorn',
 ]
 
