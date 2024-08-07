@@ -19,7 +19,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from django.views.generic import RedirectView
-from django.conf.urls import url
+#from django.conf.urls import url
 from django.urls import path
 from django.views import generic
 from django.conf.urls.static import static
@@ -38,7 +38,7 @@ tejas_patterns = ([
     path('postlist', views.PostList.as_view(), name="post_list"),
     path('<slug:slug>', views.post_detail, name='post_detail'),
     path('contacta', views.contactView, name='contacta'),
-    path('success', views.successView, name='success'),
+    path('success', views.successView.as_view(), name='success'),
     ],'tejas')
 
 urlpatterns = [
@@ -53,3 +53,4 @@ urlpatterns += [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
